@@ -1,10 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
-
 from controller.car_shop_controlller import CarController
+
 from model.enums.status import CarStatus
 from view.add_car_window import AddCarWindow
+from view.update_car_window import UpdateCarWindow
 
 
 class CarView(tk.Tk):
@@ -22,9 +23,14 @@ class CarView(tk.Tk):
             self.principal_view, text="Add Car", command=self.open_add_car_window)
         add_button.grid(row=5, column=0, columnspan=2, padx=5, pady=5)
 
+        update_button = tk.Button(
+            self.principal_view, text="Update Car", command=self.open_update_car_window)
+        update_button.grid(row=6, column=0, columnspan=2, padx=5, pady=5)
+
         self.car_treeview = ttk.Treeview(self, columns=(
             "brand", "model", "year", "price", "status"))
-        self.car_treeview.pack(padx=10, pady=10)
+        self.car_treeview['show'] = ''
+        self.car_treeview.pack()
 
         self.car_treeview.heading("brand", text="Brand")
         self.car_treeview.heading("model", text="Model")
@@ -32,11 +38,11 @@ class CarView(tk.Tk):
         self.car_treeview.heading("price", text="Price")
         self.car_treeview.heading("status", text="Status")
 
-        self.car_treeview.column("brand", width=100)
-        self.car_treeview.column("model", width=100)
-        self.car_treeview.column("year", width=50)
-        self.car_treeview.column("price", width=80)
-        self.car_treeview.column("status", width=80)
+        self.car_treeview.column("brand")
+        self.car_treeview.column("model")
+        self.car_treeview.column("year")
+        self.car_treeview.column("price")
+        self.car_treeview.column("status")
 
         filter_label = tk.Label(self, text="Filter by brand:")
         filter_label.pack(padx=10, pady=10)
@@ -53,9 +59,29 @@ class CarView(tk.Tk):
         add_car_window = AddCarWindow(self, self.add_car)
         add_car_window.grab_set()
 
+    def open_update_car_window(self):
+        selected_item = self.car_treeview.focus()
+        if selected_item:
+            car_data = self.car_treeview.item(selected_item)["values"]
+            update_car_window = UpdateCarWindow(
+                self, car_data, self.update_car)
+            update_car_window.grab_set()
+        else:
+            messagebox.showerror("Error", "No car selected.")
+
     def add_car(self, brand, model, year, price, status):
         self.controller.add_car(brand, model, year, price, status)
         self.get_all_cars()
+
+    def update_car(self, brand, model, year, price, status):
+        selected_item = self.car_treeview.focus()
+        if selected_item:
+            car_id = self.car_treeview.item(selected_item)["values"][0]
+            self.controller.update_car(
+                car_id, brand, model, year, price, status)
+            self.get_all_cars()
+        else:
+            messagebox.showerror("Error", "No car selected.")
 
     def filter_by_brand(self):
         self.car_treeview.delete(*self.car_treeview.get_children())
