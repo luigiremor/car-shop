@@ -29,6 +29,31 @@ class CarDatabase:
         conn.commit()
         conn.close()
 
+    def filter_by_brand(self, brand):
+        conn = sqlite3.connect(self.db_name)
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM cars WHERE brand LIKE ?",
+                       (f"%{brand}%",))
+        rows = cursor.fetchall()
+        conn.close()
+        return rows
+
+    # def update_car(self, car_id, car):
+    #     conn = sqlite3.connect(self.db_name)
+    #     cursor = conn.cursor()
+    #     cursor.execute("""
+    #         UPDATE cars SET brand = ?, model = ?, year = ?, price = ?, status = ? WHERE rowid = ?
+    #     """, (car.brand, car.model, car.year, car.price, car.status.value, car_id))
+    #     conn.commit()
+    #     conn.close()
+
+    # def delete_car(self, car_id):
+    #     conn = sqlite3.connect(self.db_name)
+    #     cursor = conn.cursor()
+    #     cursor.execute("DELETE FROM cars WHERE rowid = ?", (car_id,))
+    #     conn.commit()
+    #     conn.close()
+
     def get_all_cars(self):
         conn = sqlite3.connect(self.db_name)
         cursor = conn.cursor()

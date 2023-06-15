@@ -15,5 +15,7 @@ class CarController:
         self.view.show_message("Car added successfully.")
 
     def get_all_cars(self):
-        cars = self.db.get_all_cars()
-        self.view.show_cars(cars)
+        return self.db.get_all_cars()
+
+    def filter_by_brand(self, brand):
+        return self.db.filter_by_brand(brand)
