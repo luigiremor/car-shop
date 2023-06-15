@@ -19,3 +19,8 @@ class CarController:
 
     def filter_by_brand(self, brand):
         return self.db.filter_by_brand(brand)
+
+    def update_car(self, car_id, brand, model, year, price, status):
+        car = Car(brand, model, year, price, CarStatus(status))
+        self.db.update_car(car_id, car)
+        self.view.show_message("Car updated successfully.")

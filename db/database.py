@@ -1,5 +1,7 @@
 import sqlite3
 
+from model.car import Car
+
 
 class CarDatabase:
     def __init__(self, db_name):
@@ -20,7 +22,7 @@ class CarDatabase:
         conn.commit()
         conn.close()
 
-    def insert_car(self, car):
+    def insert_car(self, car: Car):
         conn = sqlite3.connect(self.db_name)
         cursor = conn.cursor()
         cursor.execute("""
@@ -38,14 +40,14 @@ class CarDatabase:
         conn.close()
         return rows
 
-    # def update_car(self, car_id, car):
-    #     conn = sqlite3.connect(self.db_name)
-    #     cursor = conn.cursor()
-    #     cursor.execute("""
-    #         UPDATE cars SET brand = ?, model = ?, year = ?, price = ?, status = ? WHERE rowid = ?
-    #     """, (car.brand, car.model, car.year, car.price, car.status.value, car_id))
-    #     conn.commit()
-    #     conn.close()
+    def update_car(self, car_id, car: Car):
+        conn = sqlite3.connect(self.db_name)
+        cursor = conn.cursor()
+        cursor.execute("""
+            UPDATE cars SET brand = ?, model = ?, year = ?, price = ?, status = ? WHERE rowid = ?
+        """, (car.brand, car.model, car.year, car.price, car.status.value, car_id))
+        conn.commit()
+        conn.close()
 
     # def delete_car(self, car_id):
     #     conn = sqlite3.connect(self.db_name)

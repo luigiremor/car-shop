@@ -75,10 +75,11 @@ class CarView(tk.Tk):
     def filter_by_brand(self):
         self.car_listbox.delete(0, tk.END)
         brand = self.filter_entry.get()
+        print(brand, 'filter by brand')
         if brand == "":
-            cars = self.get_all_cars()
-        else:
-            cars = self.controller.filter_by_brand(brand)
+            return self.get_all_cars()
+
+        cars = self.controller.filter_by_brand(brand)
         self.show_cars(cars)
 
     def get_all_cars(self):
