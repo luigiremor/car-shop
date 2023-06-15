@@ -28,16 +28,18 @@ class CarView(tk.Tk):
         update_button.grid(row=6, column=0, columnspan=2, padx=5, pady=5)
 
         self.car_treeview = ttk.Treeview(self, columns=(
-            "brand", "model", "year", "price", "status"))
+            "id", "brand", "model", "year", "price", "status"))
         self.car_treeview['show'] = ''
         self.car_treeview.pack()
 
+        self.car_treeview.heading("id", text="ID")
         self.car_treeview.heading("brand", text="Brand")
         self.car_treeview.heading("model", text="Model")
         self.car_treeview.heading("year", text="Year")
         self.car_treeview.heading("price", text="Price")
         self.car_treeview.heading("status", text="Status")
 
+        self.car_treeview.column("id")
         self.car_treeview.column("brand")
         self.car_treeview.column("model")
         self.car_treeview.column("year")
@@ -73,10 +75,10 @@ class CarView(tk.Tk):
         self.controller.add_car(brand, model, year, price, status)
         self.get_all_cars()
 
-    def update_car(self, brand, model, year, price, status):
+    def update_car(self, car_id, brand, model, year, price, status):
         selected_item = self.car_treeview.focus()
         if selected_item:
-            car_id = self.car_treeview.item(selected_item)["values"][0]
+            # car_id = self.car_treeview.item(selected_item)["values"][0]
             self.controller.update_car(
                 car_id, brand, model, year, price, status)
             self.get_all_cars()

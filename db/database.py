@@ -12,6 +12,7 @@ class CarDatabase:
         cursor = conn.cursor()
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS cars (
+                id INTEGER PRIMARY KEY,
                 brand TEXT,
                 model TEXT,
                 year INTEGER,
@@ -26,7 +27,7 @@ class CarDatabase:
         conn = sqlite3.connect(self.db_name)
         cursor = conn.cursor()
         cursor.execute("""
-            INSERT INTO cars VALUES (?, ?, ?, ?, ?)
+            INSERT INTO cars (brand, model, year, price, status) VALUES (?, ?, ?, ?, ?)
         """, (car.brand, car.model, car.year, car.price, car.status.value))
         conn.commit()
         conn.close()
@@ -44,17 +45,17 @@ class CarDatabase:
         conn = sqlite3.connect(self.db_name)
         cursor = conn.cursor()
         cursor.execute("""
-            UPDATE cars SET brand = ?, model = ?, year = ?, price = ?, status = ? WHERE rowid = ?
+            UPDATE cars SET brand = ?, model = ?, year = ?, price = ?, status = ? WHERE id = ?
         """, (car.brand, car.model, car.year, car.price, car.status.value, car_id))
         conn.commit()
         conn.close()
 
-    # def delete_car(self, car_id):
-    #     conn = sqlite3.connect(self.db_name)
-    #     cursor = conn.cursor()
-    #     cursor.execute("DELETE FROM cars WHERE rowid = ?", (car_id,))
-    #     conn.commit()
-    #     conn.close()
+    def delete_car(self, car_id):
+        conn = sqlite3.connect(self.db_name)
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM cars WHERE id = ?", (car_id,))
+        conn.commit()
+        conn.close()
 
     def get_all_cars(self):
         conn = sqlite3.connect(self.db_name)

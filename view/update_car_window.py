@@ -18,38 +18,39 @@ class UpdateCarWindow(tk.Toplevel):
         brand_label.grid(row=0, column=0, padx=5, pady=5)
         self.brand_entry = tk.Entry(self)
         self.brand_entry.grid(row=0, column=1, padx=5, pady=5)
-        self.brand_entry.insert(tk.END, self.car_data[0])
+        self.brand_entry.insert(tk.END, self.car_data[1])
 
         model_label = tk.Label(self, text="Model:")
         model_label.grid(row=1, column=0, padx=5, pady=5)
         self.model_entry = tk.Entry(self)
         self.model_entry.grid(row=1, column=1, padx=5, pady=5)
-        self.model_entry.insert(tk.END, self.car_data[1])
+        self.model_entry.insert(tk.END, self.car_data[2])
 
         year_label = tk.Label(self, text="Year:")
         year_label.grid(row=2, column=0, padx=5, pady=5)
         self.year_entry = tk.Entry(self)
         self.year_entry.grid(row=2, column=1, padx=5, pady=5)
-        self.year_entry.insert(tk.END, self.car_data[2])
+        self.year_entry.insert(tk.END, self.car_data[3])
 
         price_label = tk.Label(self, text="Price:")
         price_label.grid(row=3, column=0, padx=5, pady=5)
         self.price_entry = tk.Entry(self)
         self.price_entry.grid(row=3, column=1, padx=5, pady=5)
-        self.price_entry.insert(tk.END, self.car_data[3])
+        self.price_entry.insert(tk.END, self.car_data[4])
 
         status_label = tk.Label(self, text="Status:")
         status_label.grid(row=4, column=0, padx=5, pady=5)
         self.status_combobox = ttk.Combobox(self, values=[
             status.value for status in CarStatus])
         self.status_combobox.grid(row=4, column=1, padx=5, pady=5)
-        self.status_combobox.set(self.car_data[4])
+        self.status_combobox.set(self.car_data[5])
 
         update_button = tk.Button(
             self, text="Update Car", command=self.update_car)
         update_button.grid(row=5, column=0, columnspan=2, padx=5, pady=5)
 
     def update_car(self):
+        car_id = self.car_data[0]
         brand = self.brand_entry.get()
         model = self.model_entry.get()
         year = int(self.year_entry.get())
@@ -57,7 +58,7 @@ class UpdateCarWindow(tk.Toplevel):
         status = self.status_combobox.get()
 
         if brand and model and year and price:
-            self.update_callback(brand, model, year, price, status)
+            self.update_callback(car_id, brand, model, year, price, status)
             self.destroy()
         else:
             messagebox.showerror("Error", "Please fill in all fields.")
