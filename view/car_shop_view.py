@@ -27,6 +27,10 @@ class CarView(tk.Tk):
             self.principal_view, text="Update Car", command=self.open_update_car_window)
         update_button.grid(row=6, column=0, columnspan=2, padx=5, pady=5)
 
+        delete_button = tk.Button(
+            self.principal_view, text="Delete Car", command=self.delete_car)
+        delete_button.grid(row=7, column=0, columnspan=2, padx=5, pady=5)
+
         self.car_treeview = ttk.Treeview(self, columns=(
             "id", "brand", "model", "year", "price", "status"))
         self.car_treeview['show'] = ''
@@ -78,9 +82,17 @@ class CarView(tk.Tk):
     def update_car(self, car_id, brand, model, year, price, status):
         selected_item = self.car_treeview.focus()
         if selected_item:
-            # car_id = self.car_treeview.item(selected_item)["values"][0]
             self.controller.update_car(
                 car_id, brand, model, year, price, status)
+            self.get_all_cars()
+        else:
+            messagebox.showerror("Error", "No car selected.")
+
+    def delete_car(self):
+        selected_item = self.car_treeview.focus()
+        if selected_item:
+            car_id = self.car_treeview.item(selected_item)["values"][0]
+            self.controller.delete_car(car_id)
             self.get_all_cars()
         else:
             messagebox.showerror("Error", "No car selected.")

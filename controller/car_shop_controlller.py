@@ -24,3 +24,7 @@ class CarController:
         car = Car(brand, model, year, price, CarStatus(status))
         self.db.update_car(car_id, car)
         self.view.show_message("Car updated successfully.")
+
+    def delete_car(self, car_id):
+        self.db.delete_car(car_id)
+        self.view.show_message("Car deleted successfully.")
