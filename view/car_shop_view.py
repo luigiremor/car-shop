@@ -4,6 +4,7 @@ from tkinter import messagebox
 
 from controller.car_shop_controlller import CarController
 from model.enums.status import CarStatus
+from view.add_car_window import AddCarWindow
 
 
 class CarView(tk.Tk):
@@ -17,40 +18,13 @@ class CarView(tk.Tk):
         self.principal_view = tk.Frame(self)
         self.principal_view.pack(pady=10)
 
-        brand_label = tk.Label(self.principal_view, text="Brand:")
-        brand_label.grid(row=0, column=0, padx=5, pady=5)
-        self.brand_entry = tk.Entry(self.principal_view)
-        self.brand_entry.grid(row=0, column=1, padx=5, pady=5)
-
-        model_label = tk.Label(self.principal_view, text="Model:")
-        model_label.grid(row=1, column=0, padx=5, pady=5)
-        self.model_entry = tk.Entry(self.principal_view)
-        self.model_entry.grid(row=1, column=1, padx=5, pady=5)
-
-        year_label = tk.Label(self.principal_view, text="Year:")
-        year_label.grid(row=2, column=0, padx=5, pady=5)
-        self.year_entry = tk.Entry(self.principal_view)
-        self.year_entry.grid(row=2, column=1, padx=5, pady=5)
-
-        price_label = tk.Label(self.principal_view, text="Price:")
-        price_label.grid(row=3, column=0, padx=5, pady=5)
-        self.price_entry = tk.Entry(self.principal_view)
-        self.price_entry.grid(row=3, column=1, padx=5, pady=5)
-
-        status_label = tk.Label(self.principal_view, text="Status:")
-        status_label.grid(row=4, column=0, padx=5, pady=5)
-        self.status_combobox = ttk.Combobox(self.principal_view, values=[
-                                            status.value for status in CarStatus])
-        self.status_combobox.grid(row=4, column=1, padx=5, pady=5)
-        self.status_combobox.current(0)
-
         add_button = tk.Button(
-            self.principal_view, text="Add Car", command=self.add_car)
+            self.principal_view, text="Add Car", command=self.open_add_car_window)
         add_button.grid(row=5, column=0, columnspan=2, padx=5, pady=5)
 
         self.car_treeview = ttk.Treeview(self, columns=(
             "brand", "model", "year", "price", "status"))
-        self.car_treeview.pack()
+        self.car_treeview.pack(padx=10, pady=10)
 
         self.car_treeview.heading("brand", text="Brand")
         self.car_treeview.heading("model", text="Model")
@@ -75,13 +49,11 @@ class CarView(tk.Tk):
         if self.controller.get_all_cars():
             self.get_all_cars()
 
-    def add_car(self):
-        brand = self.brand_entry.get()
-        model = self.model_entry.get()
-        year = int(self.year_entry.get())
-        price = float(self.price_entry.get())
-        status = self.status_combobox.get()
+    def open_add_car_window(self):
+        add_car_window = AddCarWindow(self, self.add_car)
+        add_car_window.grab_set()
 
+    def add_car(self, brand, model, year, price, status):
         self.controller.add_car(brand, model, year, price, status)
         self.get_all_cars()
 
