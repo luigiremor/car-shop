@@ -1,10 +1,10 @@
 
-from model.enums.status import CarStatus
+from model.enums.car_status import CarStatus
 
 
 class Car:
     """
-    Car class
+    Car Model Class
     """
 
     def __init__(self, brand: str, model: str, year: int, price: float, status: CarStatus):

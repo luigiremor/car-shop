@@ -1,9 +1,9 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
-from controller.car_shop_controlller import CarController
+from controller.car_controlller import CarController
 
-from model.enums.status import CarStatus
+from model.enums.car_status import CarStatus
 from view.add_car_window import AddCarWindow
 from view.update_car_window import UpdateCarWindow
 
@@ -129,5 +129,7 @@ class CarView(tk.Tk):
             self.car_treeview.insert("", tk.END, values=car)
 
     def update_mean_price(self):
-        self.value_mean.set(
-            f"Mean price: {self.controller.get_mean_price():.2f}")
+        mean_price = self.controller.get_mean_price()
+        if mean_price is None:
+            mean_price = 0
+        self.value_mean.set(f"Mean price: {mean_price:.2f}")

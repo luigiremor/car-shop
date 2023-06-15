@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 
-from model.enums.status import CarStatus
+from model.enums.car_status import CarStatus
 
 
 class UpdateCarWindow(tk.Toplevel):

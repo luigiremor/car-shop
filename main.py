@@ -1,5 +1,6 @@
 
-from view.car_shop_view import CarView
+
+from view.car_view import CarView
 
 
 if __name__ == "__main__":

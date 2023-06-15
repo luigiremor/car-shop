@@ -1,6 +1,6 @@
-from db.database import CarDatabase
+from db.car_database import CarDatabase
 from model.car import Car
-from model.enums.status import CarStatus
+from model.enums.car_status import CarStatus
 
 
 class CarController:

@@ -2,8 +2,8 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
 
-from controller.car_shop_controlller import CarController
-from model.enums.status import CarStatus
+from controller.car_controlller import CarController
+from model.enums.car_status import CarStatus
 
 
 class AddCarWindow(tk.Toplevel):
