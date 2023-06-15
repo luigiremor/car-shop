@@ -1,51 +1,19 @@
-
-
-import json
+from db.database import CarDatabase
 from model.car import Car
+from model.enums.status import CarStatus
 
-from model.shop import Shop
 
+class CarController:
+    def __init__(self, view):
+        self.view = view
+        self.db = CarDatabase("car_inventory.db")
+        self.db.create_table()
 
-class CarShopController():
+    def add_car(self, brand, model, year, price, status):
+        car = Car(brand, model, year, price, CarStatus(status))
+        self.db.insert_car(car)
+        self.view.show_message("Car added successfully.")
 
-    def __init__(self, shop: Shop) -> None:
-        self.__shop: Shop = shop
-        self.load_data()
-
-    @property
-    def shop(self) -> Shop:
-        return self.__shop
-
-    @shop.setter
-    def shop(self, shop: Shop) -> None:
-        self.__shop = shop
-
-    def add_car(self, car: Car) -> None:
-        self.__shop.stock.append(car)
-        self.save_data()
-
-    def remove_car(self, car: Car) -> None:
-        self.__shop.stock.remove(car)
-        self.save_data()
-
-    def update_car(self, car: Car) -> None:
-        self.__shop.stock.remove(car)
-        self.__shop.stock.append(car)
-        self.save_data()
-
-    def search_all_cars_by_brand(self, brand: str) -> list:
-        return [car for car in self.__shop.stock if car.brand == brand]
-
-    def save_data(self):
-        with open("data.json", 'w') as f:
-            json.dump(self.__shop, f)
-
-    def load_data(self):
-        try:
-            with open("db/data.json", 'r+') as f:
-                data = json.load(f)
-
-                self.__shop = data
-                f.close()
-        except FileNotFoundError:
-            pass
+    def get_all_cars(self):
+        cars = self.db.get_all_cars()
+        self.view.show_cars(cars)
