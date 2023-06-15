@@ -15,10 +15,7 @@ class Car:
         self.__status: CarStatus = status
 
     def __str__(self):
-        return f"{self.brand} {self.model} {self.year} {self.price} {self.status.value.capitalize()}"
-
-    def __repr__(self):
-        return f"{self.brand} {self.model} {self.year} {self.price} {self.status}"
+        return f"{self.brand} {self.model} {self.year} {self.price} {self.status.name}"
 
     @property
     def brand(self):
