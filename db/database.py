@@ -64,3 +64,11 @@ class CarDatabase:
         rows = cursor.fetchall()
         conn.close()
         return rows
+
+    def get_mean_price(self):
+        conn = sqlite3.connect(self.db_name)
+        cursor = conn.cursor()
+        cursor.execute("SELECT AVG(price) FROM cars")
+        rows = cursor.fetchall()
+        conn.close()
+        return rows[0][0]

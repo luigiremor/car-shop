@@ -28,3 +28,6 @@ class CarController:
     def delete_car(self, car_id):
         self.db.delete_car(car_id)
         self.view.show_message("Car deleted successfully.")
+
+    def get_mean_price(self):
+        return self.db.get_mean_price()

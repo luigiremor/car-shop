@@ -33,7 +33,7 @@ class CarView(tk.Tk):
 
         self.car_treeview = ttk.Treeview(self, columns=(
             "id", "brand", "model", "year", "price", "status"))
-        self.car_treeview['show'] = ''
+        self.car_treeview['show'] = 'headings'
         self.car_treeview.pack()
 
         self.car_treeview.heading("id", text="ID")
@@ -49,6 +49,11 @@ class CarView(tk.Tk):
         self.car_treeview.column("year")
         self.car_treeview.column("price")
         self.car_treeview.column("status")
+
+        self.value_mean = tk.StringVar()
+        self.update_mean_price()
+        mean_label = tk.Label(self, textvariable=self.value_mean)
+        mean_label.pack(padx=10, pady=10)
 
         filter_label = tk.Label(self, text="Filter by brand:")
         filter_label.pack(padx=10, pady=10)
@@ -78,6 +83,7 @@ class CarView(tk.Tk):
     def add_car(self, brand, model, year, price, status):
         self.controller.add_car(brand, model, year, price, status)
         self.get_all_cars()
+        self.update_mean_price()
 
     def update_car(self, car_id, brand, model, year, price, status):
         selected_item = self.car_treeview.focus()
@@ -85,6 +91,7 @@ class CarView(tk.Tk):
             self.controller.update_car(
                 car_id, brand, model, year, price, status)
             self.get_all_cars()
+            self.update_mean_price()
         else:
             messagebox.showerror("Error", "No car selected.")
 
@@ -94,6 +101,7 @@ class CarView(tk.Tk):
             car_id = self.car_treeview.item(selected_item)["values"][0]
             self.controller.delete_car(car_id)
             self.get_all_cars()
+            self.update_mean_price()
         else:
             messagebox.showerror("Error", "No car selected.")
 
@@ -119,3 +127,7 @@ class CarView(tk.Tk):
         self.car_treeview.delete(*self.car_treeview.get_children())
         for car in cars:
             self.car_treeview.insert("", tk.END, values=car)
+
+    def update_mean_price(self):
+        self.value_mean.set(
+            f"Mean price: {self.controller.get_mean_price():.2f}")
