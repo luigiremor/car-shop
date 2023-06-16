@@ -4,6 +4,12 @@ from model.car import Car
 
 
 class CarDatabase:
+    """
+    A classe `CarDatabase` é responsável por realizar operações de banco de dados para a entidade "Carro". 
+    Ela utiliza o SQLite como o sistema de gerenciamento de banco de dados e fornece métodos para criar tabelas, 
+    inserir, atualizar, excluir e consultar registros de carros.
+    """
+
     def __init__(self, db_name):
         self.db_name = db_name
 

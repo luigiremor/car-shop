@@ -9,6 +9,11 @@ from view.update_car_window import UpdateCarWindow
 
 
 class CarView(tk.Tk):
+    """
+    A classe `CarView` é a classe principal responsável pela exibição da interface gráfica do aplicativo de inventário
+    de carros. Ela herda da classe `tk.Tk` do Tkinter, que fornece uma janela principal.
+    """
+
     def __init__(self):
         super().__init__()
         self.title("Car Inventory")

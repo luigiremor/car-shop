@@ -7,6 +7,11 @@ from model.enums.car_status import CarStatus
 
 
 class AddCarWindow(tk.Toplevel):
+    """
+    A classe `AddCarWindow` é uma janela de diálogo utilizada para adicionar um novo carro.
+    Ela herda da classe `tk.Toplevel` do Tkinter, que fornece uma janela separada do aplicativo principal.
+    """
+
     def __init__(self, parent, add_callback):
         super().__init__(parent)
         self.title("Add Car")

@@ -4,7 +4,9 @@ from model.enums.car_status import CarStatus
 
 class Car:
     """
-    Car Model Class
+    A classe `Car` representa um carro com várias propriedades, como marca, modelo, ano, preço e status.
+    Essa classe possui getters e setters para todas as propriedades, garantindo encapsulamento e controle
+    sobre o acesso aos atributos privados.
     """
 
     def __init__(self, brand: str, model: str, year: int, price: float, status: CarStatus):

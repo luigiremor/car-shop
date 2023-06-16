@@ -6,6 +6,11 @@ from model.enums.car_status import CarStatus
 
 
 class UpdateCarWindow(tk.Toplevel):
+    """
+    A classe `UpdateCarWindow` é uma janela de diálogo utilizada para atualizar os dados de um carro existente.
+    Ela herda da classe `tk.Toplevel` do Tkinter, que fornece uma janela separada do aplicativo principal.
+    """
+
     def __init__(self, parent, car_data, update_callback):
         super().__init__(parent)
         self.title("Update Car")

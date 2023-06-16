@@ -4,6 +4,11 @@ from model.enums.car_status import CarStatus
 
 
 class CarController:
+    """
+    A classe `CarController` é responsável por intermediar a interação entre a interface gráfica e o banco de dados,
+    gerenciando as operações relacionadas aos carros.
+    """
+
     def __init__(self, view):
         self.view = view
         self.db = CarDatabase("car_inventory.db")
